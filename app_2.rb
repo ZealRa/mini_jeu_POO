@@ -68,7 +68,7 @@ while user.life_points > 0 && enemies.any? { |enemy| enemy.life_points > 0 }
 end
 
 if user.life_points > 0 && enemies.all? { |enemy| enemy.life_points <= 0 }
-puts "----------"
+  puts '----------'
   puts 'Félicitations ! Tu as vaincu tous tes ennemis. Victoire !'
 end
 

@@ -44,12 +44,12 @@ class HumanPlayer < Player
 
   def initialize(player_name)
     @name = player_name
-    @life_points = 100
-    @weapon_level = 1
+    @life_points = 150
+    @weapon_level = 2
   end
 
   def compute_damage
-    weapon_level = @weapon_level || 1
+    weapon_level = @weapon_level || 2
     rand(1..6) * weapon_level
   end
 
@@ -71,7 +71,7 @@ class HumanPlayer < Player
       puts result
       points_recovered = 0
     elsif chance >= 2 && chance <= 5
-      if @life_points + 50 <= 100
+      if @life_points + 50 <= 150
         @life_points += 50
         points_recovered = 50
         result = 'Bravo, tu as trouvé 50 points de vie !'
@@ -82,7 +82,7 @@ class HumanPlayer < Player
         puts result
       end
     elsif chance == 6
-      if @life_points + 80 <= 100
+      if @life_points + 80 <= 150
         @life_points += 80
         points_recovered = 80
         result = 'Wow, tu as trouvé 80 points de vie !'
@@ -91,7 +91,7 @@ class HumanPlayer < Player
         result = 'Tu as déjà trop de points de vie'
       end
     end
-    @life_points = 100 if @life_points > 100
-    return points_recovered, result
+    @life_points = 150 if @life_points > 150
+    [points_recovered, result]
   end
 end
