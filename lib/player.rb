@@ -8,6 +8,11 @@ class Player
     @life_points = 10
   end
 
+  def compute_damage
+    weapon_level = @weapon_level || 1
+    rand(1..6) * weapon_level
+  end
+
   def show_state
     if is_a?(HumanPlayer)
       puts "#{@name} a #{@life_points} points de vie et une arme de niveau #{@weapon_level}"
@@ -43,6 +48,11 @@ class HumanPlayer < Player
     @weapon_level = 1
   end
 
+  def compute_damage
+    weapon_level = @weapon_level || 1
+    rand(1..6) * weapon_level
+  end
+
   def search_weapon
     new_weapon = rand(1..6)
     puts "Tu as trouvé une arme de niveau #{new_weapon}"
@@ -55,24 +65,33 @@ class HumanPlayer < Player
   end
 
   def search_health_pack
-    chance =  rand(1..6)
+    chance = rand(1..6)
     if chance == 1
-      puts "Loser ! T'as rien trouvé!"
+      result = "Loser ! T'as rien trouvé!"
+      puts result
+      points_recovered = 0
     elsif chance >= 2 && chance <= 5
       if @life_points + 50 <= 100
-        puts 'Bravo, tu as trouvé 50 points de vie !'
         @life_points += 50
+        points_recovered = 50
+        result = 'Bravo, tu as trouvé 50 points de vie !'
+        puts result
       else
-        puts 'Tu as déjà trop de points de vie'
+        points_recovered = 0
+        result = 'Tu as déjà trop de points de vie'
+        puts result
       end
     elsif chance == 6
       if @life_points + 80 <= 100
-        puts 'Wow, tu as trouvé 80 points de vie !'
         @life_points += 80
+        points_recovered = 80
+        result = 'Wow, tu as trouvé 80 points de vie !'
       else
-        puts 'Tu as déjà trop de points de vie'
+        points_recovered = 0
+        result = 'Tu as déjà trop de points de vie'
       end
     end
-    @life_points = 100 if life_points > 100
+    @life_points = 100 if @life_points > 100
+    return points_recovered, result
   end
 end
